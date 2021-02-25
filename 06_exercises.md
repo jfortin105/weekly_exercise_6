@@ -269,7 +269,7 @@ Once your repository is created, you should always open your **project** rather 
 
   1. This app will also use the COVID data. Make sure you load that data and all the libraries you need in the `app.R` file you create. Below, you will post a link to the app that you publish on shinyapps.io. You will create an app to compare states' cumulative number of COVID cases over time. The x-axis will be number of days since 20+ cases and the y-axis will be cumulative cases on the log scale (`scale_y_log10()`). We use number of days since 20+ cases on the x-axis so we can make better comparisons of the curve trajectories. You will have an input box where the user can choose which states to compare (`selectInput()`) and have a submit button to click once the user has chosen all states they're interested in comparing. The graph should display a different line for each state, with labels either on the graph or in a legend. Color can be used if needed. 
   
-  
+  [Link](https://jfortin116.shinyapps.io/Covid_cases_app/)
   
 ## Warm-up exercises from tutorial
 
@@ -457,7 +457,7 @@ table1
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#bfwpjioveb .gt_table {
+#nduccryvis .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -482,7 +482,7 @@ table1
   border-left-color: #D3D3D3;
 }
 
-#bfwpjioveb .gt_heading {
+#nduccryvis .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -494,7 +494,7 @@ table1
   border-right-color: #D3D3D3;
 }
 
-#bfwpjioveb .gt_title {
+#nduccryvis .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -504,7 +504,7 @@ table1
   border-bottom-width: 0;
 }
 
-#bfwpjioveb .gt_subtitle {
+#nduccryvis .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -514,13 +514,13 @@ table1
   border-top-width: 0;
 }
 
-#bfwpjioveb .gt_bottom_border {
+#nduccryvis .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bfwpjioveb .gt_col_headings {
+#nduccryvis .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -535,7 +535,7 @@ table1
   border-right-color: #D3D3D3;
 }
 
-#bfwpjioveb .gt_col_heading {
+#nduccryvis .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -555,7 +555,7 @@ table1
   overflow-x: hidden;
 }
 
-#bfwpjioveb .gt_column_spanner_outer {
+#nduccryvis .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -567,15 +567,15 @@ table1
   padding-right: 4px;
 }
 
-#bfwpjioveb .gt_column_spanner_outer:first-child {
+#nduccryvis .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bfwpjioveb .gt_column_spanner_outer:last-child {
+#nduccryvis .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bfwpjioveb .gt_column_spanner {
+#nduccryvis .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -587,7 +587,7 @@ table1
   width: 100%;
 }
 
-#bfwpjioveb .gt_group_heading {
+#nduccryvis .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -609,7 +609,7 @@ table1
   vertical-align: middle;
 }
 
-#bfwpjioveb .gt_empty_group_heading {
+#nduccryvis .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -624,15 +624,15 @@ table1
   vertical-align: middle;
 }
 
-#bfwpjioveb .gt_from_md > :first-child {
+#nduccryvis .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bfwpjioveb .gt_from_md > :last-child {
+#nduccryvis .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bfwpjioveb .gt_row {
+#nduccryvis .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -651,7 +651,7 @@ table1
   overflow-x: hidden;
 }
 
-#bfwpjioveb .gt_stub {
+#nduccryvis .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -663,7 +663,7 @@ table1
   padding-left: 12px;
 }
 
-#bfwpjioveb .gt_summary_row {
+#nduccryvis .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -673,7 +673,7 @@ table1
   padding-right: 5px;
 }
 
-#bfwpjioveb .gt_first_summary_row {
+#nduccryvis .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -683,7 +683,7 @@ table1
   border-top-color: #D3D3D3;
 }
 
-#bfwpjioveb .gt_grand_summary_row {
+#nduccryvis .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -693,7 +693,7 @@ table1
   padding-right: 5px;
 }
 
-#bfwpjioveb .gt_first_grand_summary_row {
+#nduccryvis .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -703,11 +703,11 @@ table1
   border-top-color: #D3D3D3;
 }
 
-#bfwpjioveb .gt_striped {
+#nduccryvis .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bfwpjioveb .gt_table_body {
+#nduccryvis .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -716,7 +716,7 @@ table1
   border-bottom-color: #D3D3D3;
 }
 
-#bfwpjioveb .gt_footnotes {
+#nduccryvis .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -730,13 +730,13 @@ table1
   border-right-color: #D3D3D3;
 }
 
-#bfwpjioveb .gt_footnote {
+#nduccryvis .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#bfwpjioveb .gt_sourcenotes {
+#nduccryvis .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -750,46 +750,46 @@ table1
   border-right-color: #D3D3D3;
 }
 
-#bfwpjioveb .gt_sourcenote {
+#nduccryvis .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#bfwpjioveb .gt_left {
+#nduccryvis .gt_left {
   text-align: left;
 }
 
-#bfwpjioveb .gt_center {
+#nduccryvis .gt_center {
   text-align: center;
 }
 
-#bfwpjioveb .gt_right {
+#nduccryvis .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bfwpjioveb .gt_font_normal {
+#nduccryvis .gt_font_normal {
   font-weight: normal;
 }
 
-#bfwpjioveb .gt_font_bold {
+#nduccryvis .gt_font_bold {
   font-weight: bold;
 }
 
-#bfwpjioveb .gt_font_italic {
+#nduccryvis .gt_font_italic {
   font-style: italic;
 }
 
-#bfwpjioveb .gt_super {
+#nduccryvis .gt_super {
   font-size: 65%;
 }
 
-#bfwpjioveb .gt_footnote_marks {
+#nduccryvis .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="bfwpjioveb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="nduccryvis" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style>City of Saint Paul Adopted Capital Improvement Budgets</th>

@@ -1,0 +1,13 @@
+name: Covid_cases_app
+title: Covid_cases_app
+username:
+account: jfortin116
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3698304
+bundleId: 4271870
+url: https://jfortin116.shinyapps.io/Covid_cases_app/
+when: 1614274431.90809
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: 06_exercises.html|06_exercises.md|06_exercises.Rmd|2020_harvest.csv|Adopted_Capital_Improvement_Budgets_-_Dataset.csv|covidApp.R|kaggle.zip|Parks_And_Recreation_Community_Interest_Survey_Dataset.csv|README.md|06_exercises_files/figure-html/unnamed-chunk-1-1.png|06_exercises_files/figure-html/unnamed-chunk-7-1.png|kaggle/Groceries_dataset.csv
