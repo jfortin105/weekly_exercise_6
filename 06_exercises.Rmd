@@ -79,7 +79,25 @@ Once your repository is created, you should always open your **project** rather 
 
   2. Read in the fake garden harvest data. Find the data [here](https://github.com/llendway/scraping_etc/blob/main/2020_harvest.csv) and click on the `Raw` button to get a direct link to the data. 
   
+```{r}
+X2020_harvest <- read_csv("2020_harvest.csv", 
+    col_types = cols(weight = col_number()), 
+    na = "null", skip = 2)
+View(X2020_harvest)
+```
+  
+  
   3. Read in this [data](https://www.kaggle.com/heeraldedhia/groceries-dataset) from the kaggle website. You will need to download the data first. Save it to your project/repo folder. Do some quick checks of the data to assure it has been read in appropriately.
+
+```{r}
+Groceries_dataset <- read_csv("kaggle/Groceries_dataset.csv")
+View(Groceries_dataset)
+
+Groceries_dataset %>% 
+  mutate(across(where(is.character), as.factor)) %>% 
+  summary()
+```
+
 
   4. CHALLENGE(not graded): Write code to replicate the table shown below (open the .html file to see it) created from the `garden_harvest` data as best as you can. When you get to coloring the cells, I used the following line of code for the `colors` argument:
   
@@ -90,11 +108,59 @@ colors = scales::col_numeric(
       ) %>% as.character()
 ```
 
-
-
   5. Create a table using `gt` with data from your project or from the `garden_harvest` data if your project data aren't ready.
   
+```{r}
+Capital_Improvement_Budgets <- read_csv("Adopted_Capital_Improvement_Budgets_-_Dataset.csv")
+
+```
+  
+```{r}
+Capital_Improvement_Budgets %>% 
+  mutate(across(where(is.character), as.factor)) %>% 
+  summary()
+```
+  
+```{r}
+table1 <- Capital_Improvement_Budgets %>% 
+  group_by(YEAR, DEPARTMENT) %>% 
+  summarize(sum_amount = sum(Amount)) %>% 
+  gt() %>% 
+  tab_header(title = "City of Saint Paul Adopted Capital Improvement Budgets",
+             subtitle = "2004 - 2021") %>% 
+  fmt_currency(columns = "sum_amount",
+               currency = "USD") %>% 
+  cols_label(DEPARTMENT = "Department",
+             sum_amount = "Total Amount Spent on Projects")
+
+table1
+```
+  
+  
   6. Use `patchwork` operators and functions to combine at least two graphs using your project data or `garden_harvest` data if your project data aren't read.
+
+```{r}
+g1 <- Capital_Improvement_Budgets %>% 
+  add_count(SERVICE, name = "counts") %>% 
+  mutate(s_reorder = fct_reorder(SERVICE, counts, .fun = max)) %>% 
+  ggplot(aes(y = s_reorder)) +
+  geom_bar() +
+  labs(title = "Amount of Projects by Service Type",
+       x = "",
+       y = "") 
+
+g2 <- Capital_Improvement_Budgets %>% 
+  mutate(Service_reorder = fct_reorder(SERVICE, Amount, sum)) %>% 
+  ggplot(aes(x = Amount, y = Service_reorder)) +
+  geom_col() +
+  labs(title = "Costs of Projects by Service Type ($)",
+       x = "",
+       y = "") +
+  scale_x_continuous(labels = scales::comma) +
+  theme(axis.text.x = element_text(angle = 30))
+
+g2 / g1
+```
   
 
 **DID YOU REMEMBER TO UNCOMMENT THE OPTIONS AT THE TOP?**

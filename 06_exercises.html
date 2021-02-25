@@ -3046,22 +3046,1255 @@ covid19 &lt;- read_csv(&quot;https://raw.githubusercontent.com/nytimes/covid-19-
 <div id="warm-up-exercises-from-tutorial" class="section level2">
 <h2>Warm-up exercises from tutorial</h2>
 <ol start="2" style="list-style-type: decimal">
-<li><p>Read in the fake garden harvest data. Find the data <a href="https://github.com/llendway/scraping_etc/blob/main/2020_harvest.csv">here</a> and click on the <code>Raw</code> button to get a direct link to the data.</p></li>
-<li><p>Read in this <a href="https://www.kaggle.com/heeraldedhia/groceries-dataset">data</a> from the kaggle website. You will need to download the data first. Save it to your project/repo folder. Do some quick checks of the data to assure it has been read in appropriately.</p></li>
-<li><p>CHALLENGE(not graded): Write code to replicate the table shown below (open the .html file to see it) created from the <code>garden_harvest</code> data as best as you can. When you get to coloring the cells, I used the following line of code for the <code>colors</code> argument:</p></li>
+<li>Read in the fake garden harvest data. Find the data <a href="https://github.com/llendway/scraping_etc/blob/main/2020_harvest.csv">here</a> and click on the <code>Raw</code> button to get a direct link to the data.</li>
+</ol>
+<pre class="r"><code>X2020_harvest &lt;- read_csv(&quot;2020_harvest.csv&quot;, 
+    col_types = cols(weight = col_number()), 
+    na = &quot;null&quot;, skip = 2)</code></pre>
+<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
+<pre><code>## Warning: 4 parsing failures.
+## row    col expected actual               file
+##  13 weight a number      - &#39;2020_harvest.csv&#39;
+##  25 weight a number      - &#39;2020_harvest.csv&#39;
+##  87 weight a number      - &#39;2020_harvest.csv&#39;
+##  88 weight a number      - &#39;2020_harvest.csv&#39;</code></pre>
+<pre class="r"><code>View(X2020_harvest)</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Read in this <a href="https://www.kaggle.com/heeraldedhia/groceries-dataset">data</a> from the kaggle website. You will need to download the data first. Save it to your project/repo folder. Do some quick checks of the data to assure it has been read in appropriately.</li>
+</ol>
+<pre class="r"><code>Groceries_dataset &lt;- read_csv(&quot;kaggle/Groceries_dataset.csv&quot;)</code></pre>
+<pre><code>## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   Member_number = col_double(),
+##   Date = col_character(),
+##   itemDescription = col_character()
+## )</code></pre>
+<pre class="r"><code>View(Groceries_dataset)
+
+Groceries_dataset %&gt;% 
+  mutate(across(where(is.character), as.factor)) %&gt;% 
+  summary()</code></pre>
+<pre><code>##  Member_number          Date               itemDescription 
+##  Min.   :1000   21-01-2015:   96   whole milk      : 2502  
+##  1st Qu.:2002   21-07-2015:   93   other vegetables: 1898  
+##  Median :3005   08-08-2015:   92   rolls/buns      : 1716  
+##  Mean   :3004   29-11-2015:   92   soda            : 1514  
+##  3rd Qu.:4007   30-04-2015:   91   yogurt          : 1334  
+##  Max.   :5000   26-03-2015:   88   root vegetables : 1071  
+##                 (Other)   :38213   (Other)         :28730</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>CHALLENGE(not graded): Write code to replicate the table shown below (open the .html file to see it) created from the <code>garden_harvest</code> data as best as you can. When you get to coloring the cells, I used the following line of code for the <code>colors</code> argument:</li>
 </ol>
 <pre class="r"><code>colors = scales::col_numeric(
       palette = paletteer::paletteer_d(
         palette = &quot;RColorBrewer::YlGn&quot;
       ) %&gt;% as.character()</code></pre>
 <ol start="5" style="list-style-type: decimal">
-<li><p>Create a table using <code>gt</code> with data from your project or from the <code>garden_harvest</code> data if your project data aren’t ready.</p></li>
-<li><p>Use <code>patchwork</code> operators and functions to combine at least two graphs using your project data or <code>garden_harvest</code> data if your project data aren’t read.</p></li>
+<li>Create a table using <code>gt</code> with data from your project or from the <code>garden_harvest</code> data if your project data aren’t ready.</li>
 </ol>
+<pre class="r"><code>Capital_Improvement_Budgets &lt;- read_csv(&quot;Adopted_Capital_Improvement_Budgets_-_Dataset.csv&quot;)</code></pre>
+<pre><code>## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   YEAR = col_double(),
+##   SERVICE = col_character(),
+##   TITLE = col_character(),
+##   `ID #` = col_character(),
+##   DEPARTMENT = col_character(),
+##   LOCATION = col_character(),
+##   DISTRICT = col_character(),
+##   Description = col_character(),
+##   FIN_CODE = col_character(),
+##   Amount = col_double(),
+##   LATITUDE = col_double(),
+##   LONGITUDE = col_double()
+## )</code></pre>
+<pre class="r"><code>Capital_Improvement_Budgets %&gt;% 
+  mutate(across(where(is.character), as.factor)) %&gt;% 
+  summary()</code></pre>
+<pre><code>##       YEAR                                      SERVICE   
+##  Min.   :2004   Community Facilities                :790  
+##  1st Qu.:2008   Internal Service                    :103  
+##  Median :2012   Residential and Economic Development:283  
+##  Mean   :2012   Streets and Utilities               :755  
+##  3rd Qu.:2016                                             
+##  Max.   :2021                                             
+##                                                           
+##                                                  TITLE               ID #     
+##  Sidewalk Reconstruction Program                    :  45   SU-660821-1:  35  
+##  Children&#39;s Play Area Improvements                  :  30   CF-660834  :  30  
+##  Parks Grant Prep/Preliminary Design Program        :  30   CF-661054  :  30  
+##  Bond Sale Costs                                    :  26   SU-662231  :  28  
+##  Outdoor Court Restoration Program                  :  25   CF-660833  :  25  
+##  Signalized Intersection Safety Improvements Program:  23   CF-660692-1:  24  
+##  (Other)                                            :1752   (Other)    :1759  
+##                              DEPARTMENT                   LOCATION   
+##  Public Works                     :779   Citywide             : 613  
+##  Parks and Recreation             :569   Internal Accounting  :  68  
+##  Planning and Economic Development:271   1225 Estabrook Drive :  33  
+##  General Government               : 94   Downtown area        :  16  
+##  Police                           : 48   1325 Aida Place      :  15  
+##  Fire                             : 45   891 North Dale Street:  14  
+##  (Other)                          :125   (Other)              :1172  
+##      DISTRICT  
+##  Citywide:743  
+##  0       :280  
+##  5       : 83  
+##  6       : 67  
+##  17      : 57  
+##  3       : 45  
+##  (Other) :656  
+##                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Description  
+##  A specified fund for Capital Maintenance work on City-owned facilities. This program funds the preservation of the City&#39;s physical assets.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    : 459  
+##  This is a citywide program established to improve the structural condition, safety and rideability of the city&#39;s street system.  This recurring program, which replaces the Residential Street Vitality Program, will include all city streets, both residential and arterial, and projects will be prioritized by Pavement Condition Index and Average Daily Traffic as the main criteria.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   :  58  
+##  Based on the work of Gil Penalosa, an internationally renowned urban designer, this fund will allow the building of bold and vibrant places across the City of Saint Paul.  The 8-80 Vitality Fund will build on the momentum of recent investments such as Rebuild Saint Paul and the Green Line.  An 8-80 city works for people aged 8 and aged 80, by providing streets and public spaces that create vital and welcoming neighborhoods.\n\nInvestments include:\n$8M - Palace Theatre renovations to match State bonding\n$8M - Jackson Street reconstruction and phase 1 of downtown bike loop\n$13.2M - Grand Rounds, including street reconstruction and bike lanes\n$2M - Dickerman Park, developing green spaces on the Green Line\n$1.8M - Optical fiber infrastructure to provide high speed citywide network connectivity\n$9.5M - Street Reconstruction, including 8-80 streets and public spaces:  37  
+##  Reconstruct hazardous and deteriorating sidewalks throughout the City.  The work locations are prioritized so as to correct most severe areas first.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          :  35  
+##  Continuation of an annual program which facilitates the systematic replacement, renovation, and/or retrofitting of the City&#39;s existing children&#39;s play areas based on the Parks Asset Management System, the Parks and Recreation Vision and System Plan and other factors.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   :  30  
+##  To set aside a portion of the Capital Improvement Bond proceeds to cover the cost of issuing the bonds.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       :  28  
+##  (Other)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       :1284  
+##          FIN_CODE       Amount            LATITUDE       LONGITUDE     
+##  CIB         :881   Min.   :    3300   Min.   : 0.00   Min.   :-93.20  
+##  CDBG        :293   1st Qu.:   50000   1st Qu.: 0.00   1st Qu.:  0.00  
+##  MSA         :217   Median :  165000   Median : 0.00   Median :  0.00  
+##  Assessment  : 85   Mean   :  619176   Mean   : 8.59   Mean   :-17.79  
+##  Street Bonds: 52   3rd Qu.:  467500   3rd Qu.: 0.00   3rd Qu.:  0.00  
+##  PIA         : 38   Max.   :25000000   Max.   :45.00   Max.   :  0.00  
+##  (Other)     :365                      NA&#39;s   :73      NA&#39;s   :73</code></pre>
+<pre class="r"><code>table1 &lt;- Capital_Improvement_Budgets %&gt;% 
+  group_by(YEAR, DEPARTMENT) %&gt;% 
+  summarize(sum_amount = sum(Amount)) %&gt;% 
+  gt() %&gt;% 
+  tab_header(title = &quot;City of Saint Paul Adopted Capital Improvement Budgets&quot;,
+             subtitle = &quot;2004 - 2021&quot;) %&gt;% 
+  fmt_currency(columns = &quot;sum_amount&quot;,
+               currency = &quot;USD&quot;) %&gt;% 
+  cols_label(DEPARTMENT = &quot;Department&quot;,
+             sum_amount = &quot;Total Amount Spent on Projects&quot;)</code></pre>
+<pre><code>## `summarise()` regrouping output by &#39;YEAR&#39; (override with `.groups` argument)</code></pre>
+<pre class="r"><code>table1</code></pre>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#bfwpjioveb .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#bfwpjioveb .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#bfwpjioveb .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#bfwpjioveb .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#bfwpjioveb .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bfwpjioveb .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#bfwpjioveb .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#bfwpjioveb .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#bfwpjioveb .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#bfwpjioveb .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#bfwpjioveb .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#bfwpjioveb .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#bfwpjioveb .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#bfwpjioveb .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#bfwpjioveb .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#bfwpjioveb .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#bfwpjioveb .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#bfwpjioveb .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bfwpjioveb .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#bfwpjioveb .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#bfwpjioveb .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#bfwpjioveb .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#bfwpjioveb .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#bfwpjioveb .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#bfwpjioveb .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#bfwpjioveb .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#bfwpjioveb .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#bfwpjioveb .gt_left {
+  text-align: left;
+}
+
+#bfwpjioveb .gt_center {
+  text-align: center;
+}
+
+#bfwpjioveb .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#bfwpjioveb .gt_font_normal {
+  font-weight: normal;
+}
+
+#bfwpjioveb .gt_font_bold {
+  font-weight: bold;
+}
+
+#bfwpjioveb .gt_font_italic {
+  font-style: italic;
+}
+
+#bfwpjioveb .gt_super {
+  font-size: 65%;
+}
+
+#bfwpjioveb .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="bfwpjioveb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="2" class="gt_heading gt_title gt_font_normal" style>City of Saint Paul Adopted Capital Improvement Budgets</th>
+    </tr>
+    <tr>
+      <th colspan="2" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>2004 - 2021</th>
+    </tr>
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Department</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Total Amount Spent on Projects</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2004</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire</td>
+      <td class="gt_row gt_right">$127,570.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$1,445,529.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$163,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$17,650,400.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$17,050,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Police</td>
+      <td class="gt_row gt_right">$19,800.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$39,157,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$200,000.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2005</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$30,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire</td>
+      <td class="gt_row gt_right">$3,735,925.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$2,016,455.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$197,500.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$5,428,400.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$15,950,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Police</td>
+      <td class="gt_row gt_right">$21,720.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$52,681,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$200,000.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2006</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$30,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire</td>
+      <td class="gt_row gt_right">$660,392.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$1,254,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$322,600.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$6,946,800.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$32,125,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Police</td>
+      <td class="gt_row gt_right">$1,961,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$35,351,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$200,000.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2007</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$30,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire</td>
+      <td class="gt_row gt_right">$207,853.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$1,284,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$90,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$6,114,355.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$6,194,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Police</td>
+      <td class="gt_row gt_right">$10,515,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$40,112,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$200,000.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2008</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$2,730,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire</td>
+      <td class="gt_row gt_right">$1,030,800.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$1,368,996.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$57,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Office of Technology</td>
+      <td class="gt_row gt_right">$835,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$10,559,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$4,637,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Police</td>
+      <td class="gt_row gt_right">$350,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$41,322,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$832,204.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2009</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$30,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire</td>
+      <td class="gt_row gt_right">$17,845,270.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$1,354,230.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$40,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$6,590,500.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$4,974,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Police</td>
+      <td class="gt_row gt_right">$911,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$38,652,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$500,000.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2010</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$130,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire</td>
+      <td class="gt_row gt_right">$66,500.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$793,193.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$3,485,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Office of Technology</td>
+      <td class="gt_row gt_right">$60,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$28,645,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$4,634,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Police</td>
+      <td class="gt_row gt_right">$684,460.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Art</td>
+      <td class="gt_row gt_right">$7,500.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$67,601,425.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$567,508.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2011</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$30,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire</td>
+      <td class="gt_row gt_right">$160,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$1,880,981.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$68,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$6,643,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$4,900,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Police</td>
+      <td class="gt_row gt_right">$386,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Art</td>
+      <td class="gt_row gt_right">$7,500.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$33,721,105.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$500,000.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2012</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$30,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire</td>
+      <td class="gt_row gt_right">$175,013.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$833,669.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$4,128,101.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Office of Technology</td>
+      <td class="gt_row gt_right">$134,750.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$4,556,500.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$3,555,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Police</td>
+      <td class="gt_row gt_right">$249,345.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Art</td>
+      <td class="gt_row gt_right">$6,920.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$26,049,450.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$429,300.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2013</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$30,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire</td>
+      <td class="gt_row gt_right">$27,132.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$1,114,769.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$2,000,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Office of Technology</td>
+      <td class="gt_row gt_right">$152,854.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$4,629,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$3,600,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Police</td>
+      <td class="gt_row gt_right">$64,760.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Art</td>
+      <td class="gt_row gt_right">$6,810.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$35,570,675.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$400,000.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2014</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$30,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire</td>
+      <td class="gt_row gt_right">$2,322,178.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$866,550.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$13,550,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Office of Technology</td>
+      <td class="gt_row gt_right">$2,000,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$2,535,940.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$22,402,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Police</td>
+      <td class="gt_row gt_right">$168,600.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Art</td>
+      <td class="gt_row gt_right">$7,555.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$78,940,177.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$400,000.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2015</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$30,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire</td>
+      <td class="gt_row gt_right">$254,067.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$640,250.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$183,280.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$9,018,596.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$3,600,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Police</td>
+      <td class="gt_row gt_right">$251,182.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Art</td>
+      <td class="gt_row gt_right">$7,125.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$39,806,500.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$435,000.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2016</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$30,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire</td>
+      <td class="gt_row gt_right">$1,413,370.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$2,106,932.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$98,528.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$6,711,489.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$3,350,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Police</td>
+      <td class="gt_row gt_right">$1,189,806.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Art</td>
+      <td class="gt_row gt_right">$7,490.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$30,372,385.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$400,000.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2017</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$30,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire</td>
+      <td class="gt_row gt_right">$155,821.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$665,950.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$698,421.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$11,587,898.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$3,325,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Police</td>
+      <td class="gt_row gt_right">$16,386,085.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Art</td>
+      <td class="gt_row gt_right">$7,695.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$28,178,130.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$400,000.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2018</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$69,050.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire &amp; Safety Services</td>
+      <td class="gt_row gt_right">$202,375.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$3,157,470.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$140,983.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$10,700,315.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$3,204,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Police</td>
+      <td class="gt_row gt_right">$120,520.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Art</td>
+      <td class="gt_row gt_right">$7,500.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$37,281,189.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$396,598.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2019</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$228,500.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire &amp; Safety Services</td>
+      <td class="gt_row gt_right">$678,215.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$847,531.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$200,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$11,030,444.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$3,398,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Art</td>
+      <td class="gt_row gt_right">$7,490.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$33,574,820.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$375,000.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2020</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$240,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Fire &amp; Safety Services</td>
+      <td class="gt_row gt_right">$2,000,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$3,007,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$4,147,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$3,395,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$48,068,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$232,000.00</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">2021</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Financial Services</td>
+      <td class="gt_row gt_right">$30,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">General Government</td>
+      <td class="gt_row gt_right">$2,967,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Library</td>
+      <td class="gt_row gt_right">$500,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Parks and Recreation</td>
+      <td class="gt_row gt_right">$11,262,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Planning and Economic Development</td>
+      <td class="gt_row gt_right">$3,274,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Public Works</td>
+      <td class="gt_row gt_right">$49,006,000.00</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Safety and Inspections</td>
+      <td class="gt_row gt_right">$311,000.00</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+<ol start="6" style="list-style-type: decimal">
+<li>Use <code>patchwork</code> operators and functions to combine at least two graphs using your project data or <code>garden_harvest</code> data if your project data aren’t read.</li>
+</ol>
+<pre class="r"><code>g1 &lt;- Capital_Improvement_Budgets %&gt;% 
+  add_count(SERVICE, name = &quot;counts&quot;) %&gt;% 
+  mutate(s_reorder = fct_reorder(SERVICE, counts, .fun = max)) %&gt;% 
+  ggplot(aes(y = s_reorder)) +
+  geom_bar() +
+  labs(title = &quot;Amount of Projects by Service Type&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;) 
+
+g2 &lt;- Capital_Improvement_Budgets %&gt;% 
+  mutate(Service_reorder = fct_reorder(SERVICE, Amount, sum)) %&gt;% 
+  ggplot(aes(x = Amount, y = Service_reorder)) +
+  geom_col() +
+  labs(title = &quot;Costs of Projects by Service Type ($)&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;) +
+  scale_x_continuous(labels = scales::comma) +
+  theme(axis.text.x = element_text(angle = 30))
+
+g2 / g1</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 <p><strong>DID YOU REMEMBER TO UNCOMMENT THE OPTIONS AT THE TOP?</strong></p>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogJ1dlZWtseSBFeGVyY2lzZXMgIzYnDQphdXRob3I6ICJKb3NoIEZvcnRpbiINCm91dHB1dDogDQogIGh0bWxfZG9jdW1lbnQ6DQogICAga2VlcF9tZDogVFJVRQ0KICAgIHRvYzogVFJVRQ0KICAgIHRvY19mbG9hdDogVFJVRQ0KICAgIGRmX3ByaW50OiBwYWdlZA0KICAgIGNvZGVfZG93bmxvYWQ6IHRydWUNCi0tLQ0KDQoNCmBgYHtyIHNldHVwLCBpbmNsdWRlPUZBTFNFfQ0KI2tuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSwgZXJyb3I9VFJVRSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRSkNCmBgYA0KDQpgYGB7ciBsaWJyYXJpZXN9DQpsaWJyYXJ5KHRpZHl2ZXJzZSkgICAgICMgZm9yIGRhdGEgY2xlYW5pbmcgYW5kIHBsb3R0aW5nDQpsaWJyYXJ5KGdhcmRlblIpICAgICAgICMgZm9yIExpc2EncyBnYXJkZW4gZGF0YQ0KbGlicmFyeShsdWJyaWRhdGUpICAgICAjIGZvciBkYXRlIG1hbmlwdWxhdGlvbg0KbGlicmFyeShvcGVuaW50cm8pICAgICAjIGZvciB0aGUgYWJicjJzdGF0ZSgpIGZ1bmN0aW9uDQpsaWJyYXJ5KHBhbG1lcnBlbmd1aW5zKSMgZm9yIFBhbG1lciBwZW5ndWluIGRhdGENCmxpYnJhcnkobWFwcykgICAgICAgICAgIyBmb3IgbWFwIGRhdGENCmxpYnJhcnkoZ2dtYXApICAgICAgICAgIyBmb3IgbWFwcGluZyBwb2ludHMgb24gbWFwcw0KbGlicmFyeShncGxvdHMpICAgICAgICAjIGZvciBjb2wyaGV4KCkgZnVuY3Rpb24NCmxpYnJhcnkoUkNvbG9yQnJld2VyKSAgIyBmb3IgY29sb3IgcGFsZXR0ZXMNCmxpYnJhcnkoc2YpICAgICAgICAgICAgIyBmb3Igd29ya2luZyB3aXRoIHNwYXRpYWwgZGF0YQ0KbGlicmFyeShsZWFmbGV0KSAgICAgICAjIGZvciBoaWdobHkgY3VzdG9taXphYmxlIG1hcHBpbmcNCmxpYnJhcnkoZ2d0aGVtZXMpICAgICAgIyBmb3IgbW9yZSB0aGVtZXMgKGluY2x1ZGluZyB0aGVtZV9tYXAoKSkNCmxpYnJhcnkocGxvdGx5KSAgICAgICAgIyBmb3IgdGhlIGdncGxvdGx5KCkgLSBiYXNpYyBpbnRlcmFjdGl2aXR5DQpsaWJyYXJ5KGdnYW5pbWF0ZSkgICAgICMgZm9yIGFkZGluZyBhbmltYXRpb24gbGF5ZXJzIHRvIGdncGxvdHMNCmxpYnJhcnkoZ2lmc2tpKSAgICAgICAgIyBmb3IgY3JlYXRpbmcgdGhlIGdpZiAoZG9uJ3QgbmVlZCB0byBsb2FkIHRoaXMgbGlicmFyeSBldmVyeSB0aW1lLGJ1dCBuZWVkIGl0IGluc3RhbGxlZCkNCmxpYnJhcnkodHJhbnNmb3JtcikgICAgIyBmb3IgInR3ZWVuaW5nIiAoZ2dhbmltYXRlKQ0KbGlicmFyeShzaGlueSkgICAgICAgICAjIGZvciBjcmVhdGluZyBpbnRlcmFjdGl2ZSBhcHBzDQpsaWJyYXJ5KHBhdGNod29yaykgICAgICMgZm9yIG5pY2VseSBjb21iaW5pbmcgZ2dwbG90MiBncmFwaHMgIA0KbGlicmFyeShndCkgICAgICAgICAgICAjIGZvciBjcmVhdGluZyBuaWNlIHRhYmxlcw0KbGlicmFyeShydmVzdCkgICAgICAgICAjIGZvciBzY3JhcGluZyBkYXRhDQpsaWJyYXJ5KHJvYm90c3R4dCkgICAgICMgZm9yIGNoZWNraW5nIGlmIHlvdSBjYW4gc2NyYXBlIGRhdGENCnRoZW1lX3NldCh0aGVtZV9taW5pbWFsKCkpDQpgYGANCg0KYGBge3IgZGF0YX0NCiMgTGlzYSdzIGdhcmRlbiBkYXRhDQpkYXRhKCJnYXJkZW5faGFydmVzdCIpDQoNCiNDT1ZJRC0xOSBkYXRhIGZyb20gdGhlIE5ldyBZb3JrIFRpbWVzDQpjb3ZpZDE5IDwtIHJlYWRfY3N2KCJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vbnl0aW1lcy9jb3ZpZC0xOS1kYXRhL21hc3Rlci91cy1zdGF0ZXMuY3N2IikNCg0KYGBgDQoNCiMjIFB1dCB5b3VyIGhvbWV3b3JrIG9uIEdpdEh1YiENCg0KR28gW2hlcmVdKGh0dHBzOi8vZ2l0aHViLmNvbS9sbGVuZHdheS9naXRodWJfZm9yX2NvbGxhYm9yYXRpb24vYmxvYi9tYXN0ZXIvZ2l0aHViX2Zvcl9jb2xsYWJvcmF0aW9uLm1kKSBvciB0byBwcmV2aW91cyBob21ld29yayB0byByZW1pbmQgeW91cnNlbGYgaG93IHRvIGdldCBzZXQgdXAuIA0KDQpPbmNlIHlvdXIgcmVwb3NpdG9yeSBpcyBjcmVhdGVkLCB5b3Ugc2hvdWxkIGFsd2F5cyBvcGVuIHlvdXIgKipwcm9qZWN0KiogcmF0aGVyIHRoYW4ganVzdCBvcGVuaW5nIGFuIC5SbWQgZmlsZS4gWW91IGNhbiBkbyB0aGF0IGJ5IGVpdGhlciBjbGlja2luZyBvbiB0aGUgLlJwcm9qIGZpbGUgaW4geW91ciByZXBvc2l0b3J5IGZvbGRlciBvbiB5b3VyIGNvbXB1dGVyLiBPciwgYnkgZ29pbmcgdG8gdGhlIHVwcGVyIHJpZ2h0IGhhbmQgY29ybmVyIGluIFIgU3R1ZGlvIGFuZCBjbGlja2luZyB0aGUgYXJyb3cgbmV4dCB0byB3aGVyZSBpdCBzYXlzIFByb2plY3Q6IChOb25lKS4gWW91IHNob3VsZCBzZWUgeW91ciBwcm9qZWN0IGNvbWUgdXAgaW4gdGhhdCBsaXN0IGlmIHlvdSd2ZSB1c2VkIGl0IHJlY2VudGx5LiBZb3UgY291bGQgYWxzbyBnbyB0byBGaWxlIC0tPiBPcGVuIFByb2plY3QgYW5kIG5hdmlnYXRlIHRvIHlvdXIgLlJwcm9qIGZpbGUuIA0KDQojIyBJbnN0cnVjdGlvbnMNCg0KKiBQdXQgeW91ciBuYW1lIGF0IHRoZSB0b3Agb2YgdGhlIGRvY3VtZW50LiANCg0KKiAqKkZvciBBTEwgZ3JhcGhzLCB5b3Ugc2hvdWxkIGluY2x1ZGUgYXBwcm9wcmlhdGUgbGFiZWxzLioqIA0KDQoqIEZlZWwgZnJlZSB0byBjaGFuZ2UgdGhlIGRlZmF1bHQgdGhlbWUsIHdoaWNoIEkgY3VycmVudGx5IGhhdmUgc2V0IHRvIGB0aGVtZV9taW5pbWFsKClgLiANCg0KKiBVc2UgZ29vZCBjb2RpbmcgcHJhY3RpY2UuIFJlYWQgdGhlIHNob3J0IHNlY3Rpb25zIG9uIGdvb2QgY29kZSB3aXRoIFtwaXBlc10oaHR0cHM6Ly9zdHlsZS50aWR5dmVyc2Uub3JnL3BpcGVzLmh0bWwpIGFuZCBbZ2dwbG90Ml0oaHR0cHM6Ly9zdHlsZS50aWR5dmVyc2Uub3JnL2dncGxvdDIuaHRtbCkuICoqVGhpcyBpcyBwYXJ0IG9mIHlvdXIgZ3JhZGUhKioNCg0KKiAqKk5FVyEhKiogV2l0aCBhbmltYXRlZCBncmFwaHMsIGFkZCBgZXZhbD1GQUxTRWAgdG8gdGhlIGNvZGUgY2h1bmsgdGhhdCBjcmVhdGVzIHRoZSBhbmltYXRpb24gYW5kIHNhdmVzIGl0IHVzaW5nIGBhbmltX3NhdmUoKWAuIEFkZCBhbm90aGVyIGNvZGUgY2h1bmsgdG8gcmVyZWFkIHRoZSBnaWYgYmFjayBpbnRvIHRoZSBmaWxlLiBTZWUgdGhlIFt0dXRvcmlhbF0oaHR0cHM6Ly9hbmltYXRpb24tYW5kLWludGVyYWN0aXZpdHktaW4tci5uZXRsaWZ5LmFwcC8pIGZvciBoZWxwLiANCg0KKiBXaGVuIHlvdSBhcmUgZmluaXNoZWQgd2l0aCBBTEwgdGhlIGV4ZXJjaXNlcywgdW5jb21tZW50IHRoZSBvcHRpb25zIGF0IHRoZSB0b3Agc28geW91ciBkb2N1bWVudCBsb29rcyBuaWNlci4gRG9uJ3QgZG8gaXQgYmVmb3JlIHRoZW4sIG9yIGVsc2UgeW91IG1pZ2h0IG1pc3Mgc29tZSBpbXBvcnRhbnQgd2FybmluZ3MgYW5kIG1lc3NhZ2VzLg0KDQojIyBZb3VyIGZpcnN0IGBzaGlueWAgYXBwIA0KDQogIDEuIFRoaXMgYXBwIHdpbGwgYWxzbyB1c2UgdGhlIENPVklEIGRhdGEuIE1ha2Ugc3VyZSB5b3UgbG9hZCB0aGF0IGRhdGEgYW5kIGFsbCB0aGUgbGlicmFyaWVzIHlvdSBuZWVkIGluIHRoZSBgYXBwLlJgIGZpbGUgeW91IGNyZWF0ZS4gQmVsb3csIHlvdSB3aWxsIHBvc3QgYSBsaW5rIHRvIHRoZSBhcHAgdGhhdCB5b3UgcHVibGlzaCBvbiBzaGlueWFwcHMuaW8uIFlvdSB3aWxsIGNyZWF0ZSBhbiBhcHAgdG8gY29tcGFyZSBzdGF0ZXMnIGN1bXVsYXRpdmUgbnVtYmVyIG9mIENPVklEIGNhc2VzIG92ZXIgdGltZS4gVGhlIHgtYXhpcyB3aWxsIGJlIG51bWJlciBvZiBkYXlzIHNpbmNlIDIwKyBjYXNlcyBhbmQgdGhlIHktYXhpcyB3aWxsIGJlIGN1bXVsYXRpdmUgY2FzZXMgb24gdGhlIGxvZyBzY2FsZSAoYHNjYWxlX3lfbG9nMTAoKWApLiBXZSB1c2UgbnVtYmVyIG9mIGRheXMgc2luY2UgMjArIGNhc2VzIG9uIHRoZSB4LWF4aXMgc28gd2UgY2FuIG1ha2UgYmV0dGVyIGNvbXBhcmlzb25zIG9mIHRoZSBjdXJ2ZSB0cmFqZWN0b3JpZXMuIFlvdSB3aWxsIGhhdmUgYW4gaW5wdXQgYm94IHdoZXJlIHRoZSB1c2VyIGNhbiBjaG9vc2Ugd2hpY2ggc3RhdGVzIHRvIGNvbXBhcmUgKGBzZWxlY3RJbnB1dCgpYCkgYW5kIGhhdmUgYSBzdWJtaXQgYnV0dG9uIHRvIGNsaWNrIG9uY2UgdGhlIHVzZXIgaGFzIGNob3NlbiBhbGwgc3RhdGVzIHRoZXkncmUgaW50ZXJlc3RlZCBpbiBjb21wYXJpbmcuIFRoZSBncmFwaCBzaG91bGQgZGlzcGxheSBhIGRpZmZlcmVudCBsaW5lIGZvciBlYWNoIHN0YXRlLCB3aXRoIGxhYmVscyBlaXRoZXIgb24gdGhlIGdyYXBoIG9yIGluIGEgbGVnZW5kLiBDb2xvciBjYW4gYmUgdXNlZCBpZiBuZWVkZWQuIA0KICANCiAgDQogIA0KIyMgV2FybS11cCBleGVyY2lzZXMgZnJvbSB0dXRvcmlhbA0KDQogIDIuIFJlYWQgaW4gdGhlIGZha2UgZ2FyZGVuIGhhcnZlc3QgZGF0YS4gRmluZCB0aGUgZGF0YSBbaGVyZV0oaHR0cHM6Ly9naXRodWIuY29tL2xsZW5kd2F5L3NjcmFwaW5nX2V0Yy9ibG9iL21haW4vMjAyMF9oYXJ2ZXN0LmNzdikgYW5kIGNsaWNrIG9uIHRoZSBgUmF3YCBidXR0b24gdG8gZ2V0IGEgZGlyZWN0IGxpbmsgdG8gdGhlIGRhdGEuIA0KICANCiAgMy4gUmVhZCBpbiB0aGlzIFtkYXRhXShodHRwczovL3d3dy5rYWdnbGUuY29tL2hlZXJhbGRlZGhpYS9ncm9jZXJpZXMtZGF0YXNldCkgZnJvbSB0aGUga2FnZ2xlIHdlYnNpdGUuIFlvdSB3aWxsIG5lZWQgdG8gZG93bmxvYWQgdGhlIGRhdGEgZmlyc3QuIFNhdmUgaXQgdG8geW91ciBwcm9qZWN0L3JlcG8gZm9sZGVyLiBEbyBzb21lIHF1aWNrIGNoZWNrcyBvZiB0aGUgZGF0YSB0byBhc3N1cmUgaXQgaGFzIGJlZW4gcmVhZCBpbiBhcHByb3ByaWF0ZWx5Lg0KDQogIDQuIENIQUxMRU5HRShub3QgZ3JhZGVkKTogV3JpdGUgY29kZSB0byByZXBsaWNhdGUgdGhlIHRhYmxlIHNob3duIGJlbG93IChvcGVuIHRoZSAuaHRtbCBmaWxlIHRvIHNlZSBpdCkgY3JlYXRlZCBmcm9tIHRoZSBgZ2FyZGVuX2hhcnZlc3RgIGRhdGEgYXMgYmVzdCBhcyB5b3UgY2FuLiBXaGVuIHlvdSBnZXQgdG8gY29sb3JpbmcgdGhlIGNlbGxzLCBJIHVzZWQgdGhlIGZvbGxvd2luZyBsaW5lIG9mIGNvZGUgZm9yIHRoZSBgY29sb3JzYCBhcmd1bWVudDoNCiAgDQpgYGB7ciwgZXZhbD1GQUxTRX0NCmNvbG9ycyA9IHNjYWxlczo6Y29sX251bWVyaWMoDQogICAgICBwYWxldHRlID0gcGFsZXR0ZWVyOjpwYWxldHRlZXJfZCgNCiAgICAgICAgcGFsZXR0ZSA9ICJSQ29sb3JCcmV3ZXI6OllsR24iDQogICAgICApICU+JSBhcy5jaGFyYWN0ZXIoKQ0KYGBgDQoNCg0KDQogIDUuIENyZWF0ZSBhIHRhYmxlIHVzaW5nIGBndGAgd2l0aCBkYXRhIGZyb20geW91ciBwcm9qZWN0IG9yIGZyb20gdGhlIGBnYXJkZW5faGFydmVzdGAgZGF0YSBpZiB5b3VyIHByb2plY3QgZGF0YSBhcmVuJ3QgcmVhZHkuDQogIA0KICA2LiBVc2UgYHBhdGNod29ya2Agb3BlcmF0b3JzIGFuZCBmdW5jdGlvbnMgdG8gY29tYmluZSBhdCBsZWFzdCB0d28gZ3JhcGhzIHVzaW5nIHlvdXIgcHJvamVjdCBkYXRhIG9yIGBnYXJkZW5faGFydmVzdGAgZGF0YSBpZiB5b3VyIHByb2plY3QgZGF0YSBhcmVuJ3QgcmVhZC4NCiAgDQoNCioqRElEIFlPVSBSRU1FTUJFUiBUTyBVTkNPTU1FTlQgVEhFIE9QVElPTlMgQVQgVEhFIFRPUD8qKg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogJ1dlZWtseSBFeGVyY2lzZXMgIzYnDQphdXRob3I6ICJKb3NoIEZvcnRpbiINCm91dHB1dDogDQogIGh0bWxfZG9jdW1lbnQ6DQogICAga2VlcF9tZDogVFJVRQ0KICAgIHRvYzogVFJVRQ0KICAgIHRvY19mbG9hdDogVFJVRQ0KICAgIGRmX3ByaW50OiBwYWdlZA0KICAgIGNvZGVfZG93bmxvYWQ6IHRydWUNCi0tLQ0KDQoNCmBgYHtyIHNldHVwLCBpbmNsdWRlPUZBTFNFfQ0KI2tuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSwgZXJyb3I9VFJVRSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRSkNCmBgYA0KDQpgYGB7ciBsaWJyYXJpZXN9DQpsaWJyYXJ5KHRpZHl2ZXJzZSkgICAgICMgZm9yIGRhdGEgY2xlYW5pbmcgYW5kIHBsb3R0aW5nDQpsaWJyYXJ5KGdhcmRlblIpICAgICAgICMgZm9yIExpc2EncyBnYXJkZW4gZGF0YQ0KbGlicmFyeShsdWJyaWRhdGUpICAgICAjIGZvciBkYXRlIG1hbmlwdWxhdGlvbg0KbGlicmFyeShvcGVuaW50cm8pICAgICAjIGZvciB0aGUgYWJicjJzdGF0ZSgpIGZ1bmN0aW9uDQpsaWJyYXJ5KHBhbG1lcnBlbmd1aW5zKSMgZm9yIFBhbG1lciBwZW5ndWluIGRhdGENCmxpYnJhcnkobWFwcykgICAgICAgICAgIyBmb3IgbWFwIGRhdGENCmxpYnJhcnkoZ2dtYXApICAgICAgICAgIyBmb3IgbWFwcGluZyBwb2ludHMgb24gbWFwcw0KbGlicmFyeShncGxvdHMpICAgICAgICAjIGZvciBjb2wyaGV4KCkgZnVuY3Rpb24NCmxpYnJhcnkoUkNvbG9yQnJld2VyKSAgIyBmb3IgY29sb3IgcGFsZXR0ZXMNCmxpYnJhcnkoc2YpICAgICAgICAgICAgIyBmb3Igd29ya2luZyB3aXRoIHNwYXRpYWwgZGF0YQ0KbGlicmFyeShsZWFmbGV0KSAgICAgICAjIGZvciBoaWdobHkgY3VzdG9taXphYmxlIG1hcHBpbmcNCmxpYnJhcnkoZ2d0aGVtZXMpICAgICAgIyBmb3IgbW9yZSB0aGVtZXMgKGluY2x1ZGluZyB0aGVtZV9tYXAoKSkNCmxpYnJhcnkocGxvdGx5KSAgICAgICAgIyBmb3IgdGhlIGdncGxvdGx5KCkgLSBiYXNpYyBpbnRlcmFjdGl2aXR5DQpsaWJyYXJ5KGdnYW5pbWF0ZSkgICAgICMgZm9yIGFkZGluZyBhbmltYXRpb24gbGF5ZXJzIHRvIGdncGxvdHMNCmxpYnJhcnkoZ2lmc2tpKSAgICAgICAgIyBmb3IgY3JlYXRpbmcgdGhlIGdpZiAoZG9uJ3QgbmVlZCB0byBsb2FkIHRoaXMgbGlicmFyeSBldmVyeSB0aW1lLGJ1dCBuZWVkIGl0IGluc3RhbGxlZCkNCmxpYnJhcnkodHJhbnNmb3JtcikgICAgIyBmb3IgInR3ZWVuaW5nIiAoZ2dhbmltYXRlKQ0KbGlicmFyeShzaGlueSkgICAgICAgICAjIGZvciBjcmVhdGluZyBpbnRlcmFjdGl2ZSBhcHBzDQpsaWJyYXJ5KHBhdGNod29yaykgICAgICMgZm9yIG5pY2VseSBjb21iaW5pbmcgZ2dwbG90MiBncmFwaHMgIA0KbGlicmFyeShndCkgICAgICAgICAgICAjIGZvciBjcmVhdGluZyBuaWNlIHRhYmxlcw0KbGlicmFyeShydmVzdCkgICAgICAgICAjIGZvciBzY3JhcGluZyBkYXRhDQpsaWJyYXJ5KHJvYm90c3R4dCkgICAgICMgZm9yIGNoZWNraW5nIGlmIHlvdSBjYW4gc2NyYXBlIGRhdGENCnRoZW1lX3NldCh0aGVtZV9taW5pbWFsKCkpDQpgYGANCg0KYGBge3IgZGF0YX0NCiMgTGlzYSdzIGdhcmRlbiBkYXRhDQpkYXRhKCJnYXJkZW5faGFydmVzdCIpDQoNCiNDT1ZJRC0xOSBkYXRhIGZyb20gdGhlIE5ldyBZb3JrIFRpbWVzDQpjb3ZpZDE5IDwtIHJlYWRfY3N2KCJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vbnl0aW1lcy9jb3ZpZC0xOS1kYXRhL21hc3Rlci91cy1zdGF0ZXMuY3N2IikNCg0KYGBgDQoNCiMjIFB1dCB5b3VyIGhvbWV3b3JrIG9uIEdpdEh1YiENCg0KR28gW2hlcmVdKGh0dHBzOi8vZ2l0aHViLmNvbS9sbGVuZHdheS9naXRodWJfZm9yX2NvbGxhYm9yYXRpb24vYmxvYi9tYXN0ZXIvZ2l0aHViX2Zvcl9jb2xsYWJvcmF0aW9uLm1kKSBvciB0byBwcmV2aW91cyBob21ld29yayB0byByZW1pbmQgeW91cnNlbGYgaG93IHRvIGdldCBzZXQgdXAuIA0KDQpPbmNlIHlvdXIgcmVwb3NpdG9yeSBpcyBjcmVhdGVkLCB5b3Ugc2hvdWxkIGFsd2F5cyBvcGVuIHlvdXIgKipwcm9qZWN0KiogcmF0aGVyIHRoYW4ganVzdCBvcGVuaW5nIGFuIC5SbWQgZmlsZS4gWW91IGNhbiBkbyB0aGF0IGJ5IGVpdGhlciBjbGlja2luZyBvbiB0aGUgLlJwcm9qIGZpbGUgaW4geW91ciByZXBvc2l0b3J5IGZvbGRlciBvbiB5b3VyIGNvbXB1dGVyLiBPciwgYnkgZ29pbmcgdG8gdGhlIHVwcGVyIHJpZ2h0IGhhbmQgY29ybmVyIGluIFIgU3R1ZGlvIGFuZCBjbGlja2luZyB0aGUgYXJyb3cgbmV4dCB0byB3aGVyZSBpdCBzYXlzIFByb2plY3Q6IChOb25lKS4gWW91IHNob3VsZCBzZWUgeW91ciBwcm9qZWN0IGNvbWUgdXAgaW4gdGhhdCBsaXN0IGlmIHlvdSd2ZSB1c2VkIGl0IHJlY2VudGx5LiBZb3UgY291bGQgYWxzbyBnbyB0byBGaWxlIC0tPiBPcGVuIFByb2plY3QgYW5kIG5hdmlnYXRlIHRvIHlvdXIgLlJwcm9qIGZpbGUuIA0KDQojIyBJbnN0cnVjdGlvbnMNCg0KKiBQdXQgeW91ciBuYW1lIGF0IHRoZSB0b3Agb2YgdGhlIGRvY3VtZW50LiANCg0KKiAqKkZvciBBTEwgZ3JhcGhzLCB5b3Ugc2hvdWxkIGluY2x1ZGUgYXBwcm9wcmlhdGUgbGFiZWxzLioqIA0KDQoqIEZlZWwgZnJlZSB0byBjaGFuZ2UgdGhlIGRlZmF1bHQgdGhlbWUsIHdoaWNoIEkgY3VycmVudGx5IGhhdmUgc2V0IHRvIGB0aGVtZV9taW5pbWFsKClgLiANCg0KKiBVc2UgZ29vZCBjb2RpbmcgcHJhY3RpY2UuIFJlYWQgdGhlIHNob3J0IHNlY3Rpb25zIG9uIGdvb2QgY29kZSB3aXRoIFtwaXBlc10oaHR0cHM6Ly9zdHlsZS50aWR5dmVyc2Uub3JnL3BpcGVzLmh0bWwpIGFuZCBbZ2dwbG90Ml0oaHR0cHM6Ly9zdHlsZS50aWR5dmVyc2Uub3JnL2dncGxvdDIuaHRtbCkuICoqVGhpcyBpcyBwYXJ0IG9mIHlvdXIgZ3JhZGUhKioNCg0KKiAqKk5FVyEhKiogV2l0aCBhbmltYXRlZCBncmFwaHMsIGFkZCBgZXZhbD1GQUxTRWAgdG8gdGhlIGNvZGUgY2h1bmsgdGhhdCBjcmVhdGVzIHRoZSBhbmltYXRpb24gYW5kIHNhdmVzIGl0IHVzaW5nIGBhbmltX3NhdmUoKWAuIEFkZCBhbm90aGVyIGNvZGUgY2h1bmsgdG8gcmVyZWFkIHRoZSBnaWYgYmFjayBpbnRvIHRoZSBmaWxlLiBTZWUgdGhlIFt0dXRvcmlhbF0oaHR0cHM6Ly9hbmltYXRpb24tYW5kLWludGVyYWN0aXZpdHktaW4tci5uZXRsaWZ5LmFwcC8pIGZvciBoZWxwLiANCg0KKiBXaGVuIHlvdSBhcmUgZmluaXNoZWQgd2l0aCBBTEwgdGhlIGV4ZXJjaXNlcywgdW5jb21tZW50IHRoZSBvcHRpb25zIGF0IHRoZSB0b3Agc28geW91ciBkb2N1bWVudCBsb29rcyBuaWNlci4gRG9uJ3QgZG8gaXQgYmVmb3JlIHRoZW4sIG9yIGVsc2UgeW91IG1pZ2h0IG1pc3Mgc29tZSBpbXBvcnRhbnQgd2FybmluZ3MgYW5kIG1lc3NhZ2VzLg0KDQojIyBZb3VyIGZpcnN0IGBzaGlueWAgYXBwIA0KDQogIDEuIFRoaXMgYXBwIHdpbGwgYWxzbyB1c2UgdGhlIENPVklEIGRhdGEuIE1ha2Ugc3VyZSB5b3UgbG9hZCB0aGF0IGRhdGEgYW5kIGFsbCB0aGUgbGlicmFyaWVzIHlvdSBuZWVkIGluIHRoZSBgYXBwLlJgIGZpbGUgeW91IGNyZWF0ZS4gQmVsb3csIHlvdSB3aWxsIHBvc3QgYSBsaW5rIHRvIHRoZSBhcHAgdGhhdCB5b3UgcHVibGlzaCBvbiBzaGlueWFwcHMuaW8uIFlvdSB3aWxsIGNyZWF0ZSBhbiBhcHAgdG8gY29tcGFyZSBzdGF0ZXMnIGN1bXVsYXRpdmUgbnVtYmVyIG9mIENPVklEIGNhc2VzIG92ZXIgdGltZS4gVGhlIHgtYXhpcyB3aWxsIGJlIG51bWJlciBvZiBkYXlzIHNpbmNlIDIwKyBjYXNlcyBhbmQgdGhlIHktYXhpcyB3aWxsIGJlIGN1bXVsYXRpdmUgY2FzZXMgb24gdGhlIGxvZyBzY2FsZSAoYHNjYWxlX3lfbG9nMTAoKWApLiBXZSB1c2UgbnVtYmVyIG9mIGRheXMgc2luY2UgMjArIGNhc2VzIG9uIHRoZSB4LWF4aXMgc28gd2UgY2FuIG1ha2UgYmV0dGVyIGNvbXBhcmlzb25zIG9mIHRoZSBjdXJ2ZSB0cmFqZWN0b3JpZXMuIFlvdSB3aWxsIGhhdmUgYW4gaW5wdXQgYm94IHdoZXJlIHRoZSB1c2VyIGNhbiBjaG9vc2Ugd2hpY2ggc3RhdGVzIHRvIGNvbXBhcmUgKGBzZWxlY3RJbnB1dCgpYCkgYW5kIGhhdmUgYSBzdWJtaXQgYnV0dG9uIHRvIGNsaWNrIG9uY2UgdGhlIHVzZXIgaGFzIGNob3NlbiBhbGwgc3RhdGVzIHRoZXkncmUgaW50ZXJlc3RlZCBpbiBjb21wYXJpbmcuIFRoZSBncmFwaCBzaG91bGQgZGlzcGxheSBhIGRpZmZlcmVudCBsaW5lIGZvciBlYWNoIHN0YXRlLCB3aXRoIGxhYmVscyBlaXRoZXIgb24gdGhlIGdyYXBoIG9yIGluIGEgbGVnZW5kLiBDb2xvciBjYW4gYmUgdXNlZCBpZiBuZWVkZWQuIA0KICANCiAgDQogIA0KIyMgV2FybS11cCBleGVyY2lzZXMgZnJvbSB0dXRvcmlhbA0KDQogIDIuIFJlYWQgaW4gdGhlIGZha2UgZ2FyZGVuIGhhcnZlc3QgZGF0YS4gRmluZCB0aGUgZGF0YSBbaGVyZV0oaHR0cHM6Ly9naXRodWIuY29tL2xsZW5kd2F5L3NjcmFwaW5nX2V0Yy9ibG9iL21haW4vMjAyMF9oYXJ2ZXN0LmNzdikgYW5kIGNsaWNrIG9uIHRoZSBgUmF3YCBidXR0b24gdG8gZ2V0IGEgZGlyZWN0IGxpbmsgdG8gdGhlIGRhdGEuIA0KICANCmBgYHtyfQ0KWDIwMjBfaGFydmVzdCA8LSByZWFkX2NzdigiMjAyMF9oYXJ2ZXN0LmNzdiIsIA0KICAgIGNvbF90eXBlcyA9IGNvbHMod2VpZ2h0ID0gY29sX251bWJlcigpKSwgDQogICAgbmEgPSAibnVsbCIsIHNraXAgPSAyKQ0KVmlldyhYMjAyMF9oYXJ2ZXN0KQ0KYGBgDQogIA0KICANCiAgMy4gUmVhZCBpbiB0aGlzIFtkYXRhXShodHRwczovL3d3dy5rYWdnbGUuY29tL2hlZXJhbGRlZGhpYS9ncm9jZXJpZXMtZGF0YXNldCkgZnJvbSB0aGUga2FnZ2xlIHdlYnNpdGUuIFlvdSB3aWxsIG5lZWQgdG8gZG93bmxvYWQgdGhlIGRhdGEgZmlyc3QuIFNhdmUgaXQgdG8geW91ciBwcm9qZWN0L3JlcG8gZm9sZGVyLiBEbyBzb21lIHF1aWNrIGNoZWNrcyBvZiB0aGUgZGF0YSB0byBhc3N1cmUgaXQgaGFzIGJlZW4gcmVhZCBpbiBhcHByb3ByaWF0ZWx5Lg0KDQpgYGB7cn0NCkdyb2Nlcmllc19kYXRhc2V0IDwtIHJlYWRfY3N2KCJrYWdnbGUvR3JvY2VyaWVzX2RhdGFzZXQuY3N2IikNClZpZXcoR3JvY2VyaWVzX2RhdGFzZXQpDQoNCkdyb2Nlcmllc19kYXRhc2V0ICU+JSANCiAgbXV0YXRlKGFjcm9zcyh3aGVyZShpcy5jaGFyYWN0ZXIpLCBhcy5mYWN0b3IpKSAlPiUgDQogIHN1bW1hcnkoKQ0KYGBgDQoNCg0KICA0LiBDSEFMTEVOR0Uobm90IGdyYWRlZCk6IFdyaXRlIGNvZGUgdG8gcmVwbGljYXRlIHRoZSB0YWJsZSBzaG93biBiZWxvdyAob3BlbiB0aGUgLmh0bWwgZmlsZSB0byBzZWUgaXQpIGNyZWF0ZWQgZnJvbSB0aGUgYGdhcmRlbl9oYXJ2ZXN0YCBkYXRhIGFzIGJlc3QgYXMgeW91IGNhbi4gV2hlbiB5b3UgZ2V0IHRvIGNvbG9yaW5nIHRoZSBjZWxscywgSSB1c2VkIHRoZSBmb2xsb3dpbmcgbGluZSBvZiBjb2RlIGZvciB0aGUgYGNvbG9yc2AgYXJndW1lbnQ6DQogIA0KYGBge3IsIGV2YWw9RkFMU0V9DQpjb2xvcnMgPSBzY2FsZXM6OmNvbF9udW1lcmljKA0KICAgICAgcGFsZXR0ZSA9IHBhbGV0dGVlcjo6cGFsZXR0ZWVyX2QoDQogICAgICAgIHBhbGV0dGUgPSAiUkNvbG9yQnJld2VyOjpZbEduIg0KICAgICAgKSAlPiUgYXMuY2hhcmFjdGVyKCkNCmBgYA0KDQogIDUuIENyZWF0ZSBhIHRhYmxlIHVzaW5nIGBndGAgd2l0aCBkYXRhIGZyb20geW91ciBwcm9qZWN0IG9yIGZyb20gdGhlIGBnYXJkZW5faGFydmVzdGAgZGF0YSBpZiB5b3VyIHByb2plY3QgZGF0YSBhcmVuJ3QgcmVhZHkuDQogIA0KYGBge3J9DQpDYXBpdGFsX0ltcHJvdmVtZW50X0J1ZGdldHMgPC0gcmVhZF9jc3YoIkFkb3B0ZWRfQ2FwaXRhbF9JbXByb3ZlbWVudF9CdWRnZXRzXy1fRGF0YXNldC5jc3YiKQ0KDQpgYGANCiAgDQpgYGB7cn0NCkNhcGl0YWxfSW1wcm92ZW1lbnRfQnVkZ2V0cyAlPiUgDQogIG11dGF0ZShhY3Jvc3Mod2hlcmUoaXMuY2hhcmFjdGVyKSwgYXMuZmFjdG9yKSkgJT4lIA0KICBzdW1tYXJ5KCkNCmBgYA0KICANCmBgYHtyfQ0KdGFibGUxIDwtIENhcGl0YWxfSW1wcm92ZW1lbnRfQnVkZ2V0cyAlPiUgDQogIGdyb3VwX2J5KFlFQVIsIERFUEFSVE1FTlQpICU+JSANCiAgc3VtbWFyaXplKHN1bV9hbW91bnQgPSBzdW0oQW1vdW50KSkgJT4lIA0KICBndCgpICU+JSANCiAgdGFiX2hlYWRlcih0aXRsZSA9ICJDaXR5IG9mIFNhaW50IFBhdWwgQWRvcHRlZCBDYXBpdGFsIEltcHJvdmVtZW50IEJ1ZGdldHMiLA0KICAgICAgICAgICAgIHN1YnRpdGxlID0gIjIwMDQgLSAyMDIxIikgJT4lIA0KICBmbXRfY3VycmVuY3koY29sdW1ucyA9ICJzdW1fYW1vdW50IiwNCiAgICAgICAgICAgICAgIGN1cnJlbmN5ID0gIlVTRCIpICU+JSANCiAgY29sc19sYWJlbChERVBBUlRNRU5UID0gIkRlcGFydG1lbnQiLA0KICAgICAgICAgICAgIHN1bV9hbW91bnQgPSAiVG90YWwgQW1vdW50IFNwZW50IG9uIFByb2plY3RzIikNCg0KdGFibGUxDQpgYGANCiAgDQogIA0KICA2LiBVc2UgYHBhdGNod29ya2Agb3BlcmF0b3JzIGFuZCBmdW5jdGlvbnMgdG8gY29tYmluZSBhdCBsZWFzdCB0d28gZ3JhcGhzIHVzaW5nIHlvdXIgcHJvamVjdCBkYXRhIG9yIGBnYXJkZW5faGFydmVzdGAgZGF0YSBpZiB5b3VyIHByb2plY3QgZGF0YSBhcmVuJ3QgcmVhZC4NCg0KYGBge3J9DQpnMSA8LSBDYXBpdGFsX0ltcHJvdmVtZW50X0J1ZGdldHMgJT4lIA0KICBhZGRfY291bnQoU0VSVklDRSwgbmFtZSA9ICJjb3VudHMiKSAlPiUgDQogIG11dGF0ZShzX3Jlb3JkZXIgPSBmY3RfcmVvcmRlcihTRVJWSUNFLCBjb3VudHMsIC5mdW4gPSBtYXgpKSAlPiUgDQogIGdncGxvdChhZXMoeSA9IHNfcmVvcmRlcikpICsNCiAgZ2VvbV9iYXIoKSArDQogIGxhYnModGl0bGUgPSAiQW1vdW50IG9mIFByb2plY3RzIGJ5IFNlcnZpY2UgVHlwZSIsDQogICAgICAgeCA9ICIiLA0KICAgICAgIHkgPSAiIikgDQoNCmcyIDwtIENhcGl0YWxfSW1wcm92ZW1lbnRfQnVkZ2V0cyAlPiUgDQogIG11dGF0ZShTZXJ2aWNlX3Jlb3JkZXIgPSBmY3RfcmVvcmRlcihTRVJWSUNFLCBBbW91bnQsIHN1bSkpICU+JSANCiAgZ2dwbG90KGFlcyh4ID0gQW1vdW50LCB5ID0gU2VydmljZV9yZW9yZGVyKSkgKw0KICBnZW9tX2NvbCgpICsNCiAgbGFicyh0aXRsZSA9ICJDb3N0cyBvZiBQcm9qZWN0cyBieSBTZXJ2aWNlIFR5cGUgKCQpIiwNCiAgICAgICB4ID0gIiIsDQogICAgICAgeSA9ICIiKSArDQogIHNjYWxlX3hfY29udGludW91cyhsYWJlbHMgPSBzY2FsZXM6OmNvbW1hKSArDQogIHRoZW1lKGF4aXMudGV4dC54ID0gZWxlbWVudF90ZXh0KGFuZ2xlID0gMzApKQ0KDQpnMiAvIGcxDQpgYGANCiAgDQoNCioqRElEIFlPVSBSRU1FTUJFUiBUTyBVTkNPTU1FTlQgVEhFIE9QVElPTlMgQVQgVEhFIFRPUD8qKg0K</div>
 
 
 </div>
