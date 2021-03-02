@@ -8,6 +8,7 @@ output:
     toc_float: TRUE
     df_print: paged
     code_download: true
+    code_folding: hide
 ---
 
 
@@ -16,210 +17,25 @@ output:
 
 ```r
 library(tidyverse)     # for data cleaning and plotting
-```
-
-```
-## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
-```
-
-```
-## v ggplot2 3.3.2     v purrr   0.3.4
-## v tibble  3.0.4     v dplyr   1.0.2
-## v tidyr   1.1.2     v stringr 1.4.0
-## v readr   1.4.0     v forcats 0.5.0
-```
-
-```
-## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
-```
-
-```r
 library(gardenR)       # for Lisa's garden data
 library(lubridate)     # for date manipulation
-```
-
-```
-## 
-## Attaching package: 'lubridate'
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     date, intersect, setdiff, union
-```
-
-```r
 library(openintro)     # for the abbr2state() function
-```
-
-```
-## Loading required package: airports
-```
-
-```
-## Loading required package: cherryblossom
-```
-
-```
-## Loading required package: usdata
-```
-
-```r
 library(palmerpenguins)# for Palmer penguin data
 library(maps)          # for map data
-```
-
-```
-## 
-## Attaching package: 'maps'
-```
-
-```
-## The following object is masked from 'package:purrr':
-## 
-##     map
-```
-
-```r
 library(ggmap)         # for mapping points on maps
-```
-
-```
-## Google's Terms of Service: https://cloud.google.com/maps-platform/terms/.
-```
-
-```
-## Please cite ggmap if you use it! See citation("ggmap") for details.
-```
-
-```r
 library(gplots)        # for col2hex() function
-```
-
-```
-## 
-## Attaching package: 'gplots'
-```
-
-```
-## The following object is masked from 'package:stats':
-## 
-##     lowess
-```
-
-```r
 library(RColorBrewer)  # for color palettes
 library(sf)            # for working with spatial data
-```
-
-```
-## Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
-```
-
-```r
 library(leaflet)       # for highly customizable mapping
 library(ggthemes)      # for more themes (including theme_map())
 library(plotly)        # for the ggplotly() - basic interactivity
-```
-
-```
-## 
-## Attaching package: 'plotly'
-```
-
-```
-## The following object is masked from 'package:ggmap':
-## 
-##     wind
-```
-
-```
-## The following object is masked from 'package:ggplot2':
-## 
-##     last_plot
-```
-
-```
-## The following object is masked from 'package:stats':
-## 
-##     filter
-```
-
-```
-## The following object is masked from 'package:graphics':
-## 
-##     layout
-```
-
-```r
 library(gganimate)     # for adding animation layers to ggplots
 library(gifski)        # for creating the gif (don't need to load this library every time,but need it installed)
 library(transformr)    # for "tweening" (gganimate)
-```
-
-```
-## 
-## Attaching package: 'transformr'
-```
-
-```
-## The following object is masked from 'package:sf':
-## 
-##     st_normalize
-```
-
-```r
 library(shiny)         # for creating interactive apps
 library(patchwork)     # for nicely combining ggplot2 graphs  
 library(gt)            # for creating nice tables
-```
-
-```
-## 
-## Attaching package: 'gt'
-```
-
-```
-## The following object is masked from 'package:openintro':
-## 
-##     sp500
-```
-
-```r
 library(rvest)         # for scraping data
-```
-
-```
-## Loading required package: xml2
-```
-
-```
-## 
-## Attaching package: 'rvest'
-```
-
-```
-## The following object is masked from 'package:gt':
-## 
-##     html
-```
-
-```
-## The following object is masked from 'package:purrr':
-## 
-##     pluck
-```
-
-```
-## The following object is masked from 'package:readr':
-## 
-##     guess_encoding
-```
-
-```r
 library(robotstxt)     # for checking if you can scrape data
 theme_set(theme_minimal())
 ```
@@ -231,18 +47,6 @@ data("garden_harvest")
 
 #COVID-19 data from the New York Times
 covid19 <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
-```
-
-```
-## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   date = col_date(format = ""),
-##   state = col_character(),
-##   fips = col_character(),
-##   cases = col_double(),
-##   deaths = col_double()
-## )
 ```
 
 ## Put your homework on GitHub!
@@ -280,22 +84,6 @@ Once your repository is created, you should always open your **project** rather 
 X2020_harvest <- read_csv("2020_harvest.csv", 
     col_types = cols(weight = col_number()), 
     na = "null", skip = 2)
-```
-
-```
-## Warning: Missing column names filled in: 'X1' [1]
-```
-
-```
-## Warning: 4 parsing failures.
-## row    col expected actual               file
-##  13 weight a number      - '2020_harvest.csv'
-##  25 weight a number      - '2020_harvest.csv'
-##  87 weight a number      - '2020_harvest.csv'
-##  88 weight a number      - '2020_harvest.csv'
-```
-
-```r
 View(X2020_harvest)
 ```
   
@@ -305,19 +93,6 @@ View(X2020_harvest)
 
 ```r
 Groceries_dataset <- read_csv("kaggle/Groceries_dataset.csv")
-```
-
-```
-## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   Member_number = col_double(),
-##   Date = col_character(),
-##   itemDescription = col_character()
-## )
-```
-
-```r
 View(Groceries_dataset)
 
 Groceries_dataset %>% 
@@ -352,25 +127,6 @@ colors = scales::col_numeric(
 
 ```r
 Capital_Improvement_Budgets <- read_csv("Adopted_Capital_Improvement_Budgets_-_Dataset.csv")
-```
-
-```
-## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   YEAR = col_double(),
-##   SERVICE = col_character(),
-##   TITLE = col_character(),
-##   `ID #` = col_character(),
-##   DEPARTMENT = col_character(),
-##   LOCATION = col_character(),
-##   DISTRICT = col_character(),
-##   Description = col_character(),
-##   FIN_CODE = col_character(),
-##   Amount = col_double(),
-##   LATITUDE = col_double(),
-##   LONGITUDE = col_double()
-## )
 ```
   
 
@@ -443,13 +199,7 @@ table1 <- Capital_Improvement_Budgets %>%
                currency = "USD") %>% 
   cols_label(DEPARTMENT = "Department",
              sum_amount = "Total Amount Spent on Projects")
-```
 
-```
-## `summarise()` regrouping output by 'YEAR' (override with `.groups` argument)
-```
-
-```r
 table1
 ```
 
@@ -457,7 +207,7 @@ table1
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#nduccryvis .gt_table {
+#rqdkbdkayr .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -482,7 +232,7 @@ table1
   border-left-color: #D3D3D3;
 }
 
-#nduccryvis .gt_heading {
+#rqdkbdkayr .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -494,7 +244,7 @@ table1
   border-right-color: #D3D3D3;
 }
 
-#nduccryvis .gt_title {
+#rqdkbdkayr .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -504,7 +254,7 @@ table1
   border-bottom-width: 0;
 }
 
-#nduccryvis .gt_subtitle {
+#rqdkbdkayr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -514,13 +264,13 @@ table1
   border-top-width: 0;
 }
 
-#nduccryvis .gt_bottom_border {
+#rqdkbdkayr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nduccryvis .gt_col_headings {
+#rqdkbdkayr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -535,7 +285,7 @@ table1
   border-right-color: #D3D3D3;
 }
 
-#nduccryvis .gt_col_heading {
+#rqdkbdkayr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -555,7 +305,7 @@ table1
   overflow-x: hidden;
 }
 
-#nduccryvis .gt_column_spanner_outer {
+#rqdkbdkayr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -567,15 +317,15 @@ table1
   padding-right: 4px;
 }
 
-#nduccryvis .gt_column_spanner_outer:first-child {
+#rqdkbdkayr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nduccryvis .gt_column_spanner_outer:last-child {
+#rqdkbdkayr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nduccryvis .gt_column_spanner {
+#rqdkbdkayr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -587,7 +337,7 @@ table1
   width: 100%;
 }
 
-#nduccryvis .gt_group_heading {
+#rqdkbdkayr .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -609,7 +359,7 @@ table1
   vertical-align: middle;
 }
 
-#nduccryvis .gt_empty_group_heading {
+#rqdkbdkayr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -624,15 +374,15 @@ table1
   vertical-align: middle;
 }
 
-#nduccryvis .gt_from_md > :first-child {
+#rqdkbdkayr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nduccryvis .gt_from_md > :last-child {
+#rqdkbdkayr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nduccryvis .gt_row {
+#rqdkbdkayr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -651,7 +401,7 @@ table1
   overflow-x: hidden;
 }
 
-#nduccryvis .gt_stub {
+#rqdkbdkayr .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -663,7 +413,7 @@ table1
   padding-left: 12px;
 }
 
-#nduccryvis .gt_summary_row {
+#rqdkbdkayr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -673,7 +423,7 @@ table1
   padding-right: 5px;
 }
 
-#nduccryvis .gt_first_summary_row {
+#rqdkbdkayr .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -683,7 +433,7 @@ table1
   border-top-color: #D3D3D3;
 }
 
-#nduccryvis .gt_grand_summary_row {
+#rqdkbdkayr .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -693,7 +443,7 @@ table1
   padding-right: 5px;
 }
 
-#nduccryvis .gt_first_grand_summary_row {
+#rqdkbdkayr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -703,11 +453,11 @@ table1
   border-top-color: #D3D3D3;
 }
 
-#nduccryvis .gt_striped {
+#rqdkbdkayr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nduccryvis .gt_table_body {
+#rqdkbdkayr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -716,7 +466,7 @@ table1
   border-bottom-color: #D3D3D3;
 }
 
-#nduccryvis .gt_footnotes {
+#rqdkbdkayr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -730,13 +480,13 @@ table1
   border-right-color: #D3D3D3;
 }
 
-#nduccryvis .gt_footnote {
+#rqdkbdkayr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#nduccryvis .gt_sourcenotes {
+#rqdkbdkayr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -750,46 +500,46 @@ table1
   border-right-color: #D3D3D3;
 }
 
-#nduccryvis .gt_sourcenote {
+#rqdkbdkayr .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#nduccryvis .gt_left {
+#rqdkbdkayr .gt_left {
   text-align: left;
 }
 
-#nduccryvis .gt_center {
+#rqdkbdkayr .gt_center {
   text-align: center;
 }
 
-#nduccryvis .gt_right {
+#rqdkbdkayr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nduccryvis .gt_font_normal {
+#rqdkbdkayr .gt_font_normal {
   font-weight: normal;
 }
 
-#nduccryvis .gt_font_bold {
+#rqdkbdkayr .gt_font_bold {
   font-weight: bold;
 }
 
-#nduccryvis .gt_font_italic {
+#rqdkbdkayr .gt_font_italic {
   font-style: italic;
 }
 
-#nduccryvis .gt_super {
+#rqdkbdkayr .gt_super {
   font-size: 65%;
 }
 
-#nduccryvis .gt_footnote_marks {
+#rqdkbdkayr .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="nduccryvis" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="rqdkbdkayr" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead class="gt_header">
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal" style>City of Saint Paul Adopted Capital Improvement Budgets</th>
